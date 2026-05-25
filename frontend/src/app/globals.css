@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #000000;
+  --color-foreground: #ededed;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #111111;
+  --color-border: #1f1f1f;
+  --color-border-strong: #2a2a2a;
+  --color-muted: #6b6b6b;
+  --color-subtle: #9a9a9a;
+  --color-accent: #22d3ff;
+  --color-accent-dim: rgba(34, 211, 255, 0.15);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  background: #000000;
+  color: #ededed;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(34, 211, 255, 0.35);
+  color: #fff;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.dot-bg {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.card-glow {
+  position: relative;
+}
+
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(34, 211, 255, 0.4), rgba(34, 211, 255, 0));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+@keyframes float-slow {
+
+  0%,
+  100% {
+    transform: translateY(0)
+  }
+
+  50% {
+    transform: translateY(-8px)
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8
+  }
+
+  100% {
+    transform: scale(2.4);
+    opacity: 0
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Per-area accent tokens — applied via inline style on area scope */
+.area-scope {
+  --area: #22d3ff;
+  --area-dim: rgba(34, 211, 255, 0.18);
+  --area-soft: rgba(34, 211, 255, 0.06);
+}
+
+/* Shimmer line across cards */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%) }
+  100% { transform: translateX(200%)  }
+}
+.shimmer-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+.group:hover .shimmer-line::after {
+  animation: shimmer 1.4s ease-out;
+}
+
+/* Soft entrance for staggered cards */
+@keyframes fade-up {
+  0%   { opacity: 0; transform: translateY(12px) }
+  100% { opacity: 1; transform: translateY(0)    }
+}
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Slowly drifting gradient — used as area card background */
+@keyframes drift {
+  0%, 100% { background-position: 0% 50%   }
+  50%      { background-position: 100% 50% }
+}
+.animate-drift {
+  background-size: 200% 200%;
+  animation: drift 12s ease-in-out infinite;
+}
+
+/* Rotating glyph (subtle) */
+@keyframes spin-slow {
+  to { transform: rotate(360deg) }
+}
+.animate-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+
+/* Conic gradient ring for area icons */
+.area-ring {
+  background: conic-gradient(
+    from 140deg,
+    var(--area) 0deg,
+    transparent 90deg,
+    var(--area-dim) 220deg,
+    transparent 320deg,
+    var(--area) 360deg
+  );
+}
+
+/* Card border glow keyed to area color */
+.area-card {
+  position: relative;
+  isolation: isolate;
+}
+.area-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, var(--area-dim), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.area-card:hover::after {
+  opacity: 1;
+}
+
+/* Tiny breathing dot used in status chips */
+@keyframes breathe {
+  0%, 100% { opacity: 1   }
+  50%      { opacity: 0.35 }
+}
+.animate-breathe {
+  animation: breathe 2.4s ease-in-out infinite;
+}
